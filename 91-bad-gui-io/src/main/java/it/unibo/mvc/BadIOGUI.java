@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 
@@ -42,8 +44,13 @@ public class BadIOGUI {
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
+        final JPanel mypanel = new JPanel();
+        mypanel.setLayout( new BoxLayout(mypanel, BoxLayout.X_AXIS));
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
+        final JButton read = new JButton("Read");
+        mypanel.add(read);
+        mypanel.add(write);
+        canvas.add(mypanel, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -69,6 +76,24 @@ public class BadIOGUI {
                 }
             }
         );
+
+        read.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    final List<String> testo = Files.readAllLines(Paths.get(PATH));
+                    //Possibile anche scrivere -> new File(PATH).toPath();
+                    System.out.println(testo.toString());
+                    for (final String text : testo){
+                        System.out.println(text);
+                    }
+                } catch (IOException e1) {
+                    System.out.println("Read of file is impossible");
+                    JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
+            }
+        });
     }
 
     private void display() {
@@ -90,6 +115,7 @@ public class BadIOGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+        frame.pack();
         /*
          * OK, ready to push the frame onscreen
          */
