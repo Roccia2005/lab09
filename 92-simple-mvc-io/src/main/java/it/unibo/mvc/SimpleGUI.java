@@ -2,7 +2,6 @@ package it.unibo.mvc;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +22,7 @@ public final class SimpleGUI {
 
     private final JFrame frame = new JFrame("My first java graphical interface");
 
-    SimpleGUI(final Controller controller){
+    private SimpleGUI(final Controller controller){
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
